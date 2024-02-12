@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "/Users/oleksiichalyi/Desktop/install mongo/rss-reader-app/apps/back/src/logs/error/.c43572dead0b85b261936c5cd7cc5a33478f9aa6-audit.json",
+    "files": [
+        {
+            "date": 1707756900946,
+            "name": "/Users/oleksiichalyi/Desktop/install mongo/rss-reader-app/apps/back/src/logs/error/2024-02-12.log",
+            "hash": "86d77248592747b9dfbe41800c43912cd196bbfc67d00669d7a1254471ad94b8"
+        }
+    ],
+    "hashType": "sha256"
+}
