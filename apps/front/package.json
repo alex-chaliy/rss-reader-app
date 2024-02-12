@@ -4,5 +4,9 @@
   "version": "0.0.0",
   "dependencies": {
     "typescript": "latest"
+  },
+  "scripts": {
+    "build": "...command here,,,",
+    "dev": "...command here..."
   }
 }

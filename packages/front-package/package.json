@@ -1,8 +1,0 @@
-{
-  "name": "@project/front-package",
-  "private": "true",
-  "version": "0.0.0",
-  "dependencies": {
-    "typescript": "latest"
-  }
-}
