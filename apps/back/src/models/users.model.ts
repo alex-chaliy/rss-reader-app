@@ -2,14 +2,21 @@ import { model, Schema, Document } from 'mongoose';
 import { User } from '@interfaces/users.interface';
 
 const UserSchema: Schema = new Schema({
-  email: {
+  login: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true
   },
   password: {
+    type: String
+  },
+  salt: {
     type: String,
-    required: true,
+    required: true
+  },
+  token: {
+    type: String,
+    required: true
   },
 });
 

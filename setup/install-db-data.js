@@ -15,12 +15,8 @@ db.once('open', () => {
 });
 
 const UserModel = require('./models/user.model');
-
-const user = new UserModel({
-  login: 'superrssreader',
-  salt: '1qw23er45ty6',
-  token: '27ea8bf3eeed087e368825798951ab90fb98b3349ae52d0ac30caded45b6aed3'
-});
+const testUserData = require('./data/user.json');
+const user = new UserModel(testUserData);
 
 user.save()
   .then(userDoc => {
@@ -28,4 +24,17 @@ user.save()
   })
   .catch(err => {
     console.log('error when create new User : ', err);
+  });
+
+
+const PostModel = require('./models/post.model');
+const testPostsData = require('./data/posts.json');
+const post = new PostModel(testPostsData[0]);
+
+post.save()
+  .then(postDoc => {
+    console.log('success when create new Post : ', postDoc);
+  })
+  .catch(err => {
+    console.log('error when create new Post : ', err);
   });

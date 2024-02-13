@@ -3,6 +3,12 @@
 ## Swagger Api Docs
 http://localhost:3000/api-docs/
 
+## Node.js Version
+  21.6.1
+
+## NPM Version
+  10.2.4
+
 
 ## Instruction how to run the app:
 

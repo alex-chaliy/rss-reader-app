@@ -1,0 +1,17 @@
+[
+  {
+    "imgUrl": "/public/img/sample-article-img.jpg",
+    "title": "Title 1",
+    "text": "lorem ipsum dolor text lorem ipsum dolor text lorem ipsum dolor text"
+  },
+  {
+    "imgUrl": "/public/img/sample-article-img.jpg",
+    "title": "Title 2",
+    "text": "lorem itext here long um dolor text"
+  },
+  {
+    "imgUrl": "/public/img/sample-article-img.jpg",
+    "title": "Title 3",
+    "text": "some text here lorem itext here color long um dolor text"
+  }
+]

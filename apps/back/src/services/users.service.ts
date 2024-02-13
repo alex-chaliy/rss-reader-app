@@ -7,20 +7,22 @@ import { UserModel } from '@models/users.model';
 @Service()
 export class UserService {
   public async findAllUser(): Promise<User[]> {
-    const users: User[] = await UserModel.find();
+    // privacy fields like 'token' or 'salt' sould not be shared
+    const users: User[] = await UserModel.find().select(['login']);
     return users;
   }
 
   public async findUserById(userId: string): Promise<User> {
-    const findUser: User = await UserModel.findOne({ _id: userId });
+    // privacy fields like 'token' or 'salt' sould not be shared
+    const findUser: User = await UserModel.findOne({ _id: userId }).select(['login']);
     if (!findUser) throw new HttpException(409, "User doesn't exist");
 
     return findUser;
   }
 
   public async createUser(userData: User): Promise<User> {
-    const findUser: User = await UserModel.findOne({ email: userData.email });
-    if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
+    const findUser: User = await UserModel.findOne({ login: userData.login });
+    if (findUser) throw new HttpException(409, `This login ${userData.login} already exists`);
 
     const hashedPassword = await hash(userData.password, 10);
     const createUserData: User = await UserModel.create({ ...userData, password: hashedPassword });
@@ -29,9 +31,9 @@ export class UserService {
   }
 
   public async updateUser(userId: string, userData: User): Promise<User> {
-    if (userData.email) {
-      const findUser: User = await UserModel.findOne({ email: userData.email });
-      if (findUser && findUser._id != userId) throw new HttpException(409, `This email ${userData.email} already exists`);
+    if (userData.login) {
+      const findUser: User = await UserModel.findOne({ login: userData.login });
+      if (findUser && findUser._id != userId) throw new HttpException(409, `This login ${userData.login} already exists`);
     }
 
     if (userData.password) {
