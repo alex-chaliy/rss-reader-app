@@ -7,6 +7,7 @@ import { ValidationMiddleware } from '@middlewares/validation.middleware';
 export class UserRoute implements Routes {
   public path = '/api/users';
   public router = Router();
+
   public user = new UserController();
 
   constructor() {

@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  login: { type: String, default: 'username' },
-  salt: { type: String, default: 'wdd44f3eder' },
-  token: { type: String, default: 'aeeaeaeaeaeaeaeaeaeea' }
+  email: { type: String, default: 'examole@eeeee.com' },
+  salt: { type: String, default: 'wdd44fsjkdfsjkdsfkjf3eder' },
+  token: { type: String, default: 'aeeaeaeaeaeaeaeaeaeea' },
+  name: { type: String, default: 'Name' },
 });
 
 const User = mongoose.model('User', UserSchema);

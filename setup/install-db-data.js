@@ -7,18 +7,17 @@
 const dbConfig = require('./db-config');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.protocol + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.dbName);
+const dbAddress = dbConfig.protocol + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.dbName;
+mongoose.connect(dbAddress);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'db connection error'));
 db.once('open', () => {
-  console.log("Successfully connected to MongoDB");
+  console.log(`Successfully connected to MongoDBv on : ${dbAddress}`);
 });
 
 const UserModel = require('./models/user.model');
-const testUserData = require('./data/user.json');
-const user = new UserModel(testUserData);
-
-user.save()
+const testUserData = require('./data/user.data.js');
+UserModel(testUserData).save()
   .then(userDoc => {
     console.log('success when create new User : ', userDoc);
   })
@@ -28,13 +27,12 @@ user.save()
 
 
 const PostModel = require('./models/post.model');
-const testPostsData = require('./data/posts.json');
-const post = new PostModel(testPostsData[0]);
+const testPostsData = require('./data/posts.data.js');
 
-post.save()
-  .then(postDoc => {
-    console.log('success when create new Post : ', postDoc);
+PostModel.create(testPostsData)
+  .then((result) => {
+    console.log(`success when create new Posts : `, result);
   })
-  .catch(err => {
-    console.log('error when create new Post : ', err);
+  .catch((err) => {
+    console.log(`success when create new Post : `, err);
   });

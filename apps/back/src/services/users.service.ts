@@ -6,23 +6,25 @@ import { UserModel } from '@models/users.model';
 
 @Service()
 export class UserService {
+  private publicFields: string[] = ['email', 'name'];
+
   public async findAllUser(): Promise<User[]> {
     // privacy fields like 'token' or 'salt' sould not be shared
-    const users: User[] = await UserModel.find().select(['login']);
+    const users: User[] = await UserModel.find().select(this.publicFields);
     return users;
   }
 
   public async findUserById(userId: string): Promise<User> {
     // privacy fields like 'token' or 'salt' sould not be shared
-    const findUser: User = await UserModel.findOne({ _id: userId }).select(['login']);
+    const findUser: User = await UserModel.findOne({ _id: userId }).select(this.publicFields);
     if (!findUser) throw new HttpException(409, "User doesn't exist");
 
     return findUser;
   }
 
   public async createUser(userData: User): Promise<User> {
-    const findUser: User = await UserModel.findOne({ login: userData.login });
-    if (findUser) throw new HttpException(409, `This login ${userData.login} already exists`);
+    const findUser: User = await UserModel.findOne({ email: userData.email });
+    if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
 
     const hashedPassword = await hash(userData.password, 10);
     const createUserData: User = await UserModel.create({ ...userData, password: hashedPassword });
@@ -31,9 +33,9 @@ export class UserService {
   }
 
   public async updateUser(userId: string, userData: User): Promise<User> {
-    if (userData.login) {
-      const findUser: User = await UserModel.findOne({ login: userData.login });
-      if (findUser && findUser._id != userId) throw new HttpException(409, `This login ${userData.login} already exists`);
+    if (userData.email) {
+      const findUser: User = await UserModel.findOne({ email: userData.email });
+      if (findUser && findUser._id != userId) throw new HttpException(409, `This email ${userData.email} already exists`);
     }
 
     if (userData.password) {
@@ -41,14 +43,14 @@ export class UserService {
       userData = { ...userData, password: hashedPassword };
     }
 
-    const updateUserById: User = await UserModel.findByIdAndUpdate(userId, { userData });
+    const updateUserById: User = await UserModel.findByIdAndUpdate(userId, userData, { new: true }).select(this.publicFields);
     if (!updateUserById) throw new HttpException(409, "User doesn't exist");
 
     return updateUserById;
   }
 
   public async deleteUser(userId: string): Promise<User> {
-    const deleteUserById: User = await UserModel.findByIdAndDelete(userId);
+    const deleteUserById: User = await UserModel.findByIdAndDelete(userId).select(this.publicFields);
     if (!deleteUserById) throw new HttpException(409, "User doesn't exist");
 
     return deleteUserById;

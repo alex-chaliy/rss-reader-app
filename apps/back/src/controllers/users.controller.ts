@@ -2,11 +2,19 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { User } from '@interfaces/users.interface';
 import { UserService } from '@services/users.service';
+import { AuthService } from '@services/auth.service';
 
 export class UserController {
-  public user = Container.get(UserService);
+  private user = Container.get(UserService);
+  private auth = Container.get(AuthService);
 
   public getUsers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.auth.checkAuth(req.headers.authorization);
+    } catch (error) {
+      next(error);
+    }
+
     try {
       const findAllUsersData: User[] = await this.user.findAllUser();
 
@@ -17,6 +25,12 @@ export class UserController {
   };
 
   public getUserById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.auth.checkAuth(req.headers.authorization);
+    } catch (error) {
+      next(error);
+    }
+
     try {
       const userId: string = req.params.id;
       const findOneUserData: User = await this.user.findUserById(userId);
@@ -29,6 +43,11 @@ export class UserController {
 
   public createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      await this.auth.checkAuth(req.headers.authorization);
+    } catch (error) {
+      next(error);
+    }
+    try {
       const userData: User = req.body;
       const createUserData: User = await this.user.createUser(userData);
 
@@ -39,6 +58,12 @@ export class UserController {
   };
 
   public updateUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.auth.checkAuth(req.headers.authorization);
+    } catch (error) {
+      next(error);
+    }
+
     try {
       const userId: string = req.params.id;
       const userData: User = req.body;
@@ -51,6 +76,12 @@ export class UserController {
   };
 
   public deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.auth.checkAuth(req.headers.authorization);
+    } catch (error) {
+      next(error);
+    }
+
     try {
       const userId: string = req.params.id;
       const deleteUserData: User = await this.user.deleteUser(userId);

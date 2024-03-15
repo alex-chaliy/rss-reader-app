@@ -8,5 +8,9 @@
   ],
   "dependencies": {
     "typescript": "latest"
+  },
+  "scripts": {
+    "dev": "cd apps/back && npm run dev",
+    "install-db": "node setup/install-db-data.js"
   }
 }
