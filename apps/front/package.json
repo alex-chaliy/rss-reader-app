@@ -1,12 +1,28 @@
 {
   "name": "@project/front",
-  "private": "true",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "react-addons-test-utils": "^15.4.2",
+    "react-scripts-ts": "1.0.6"
+  },
   "dependencies": {
-    "typescript": "latest"
+    "@types/enzyme": "^2.7.2",
+    "@types/jest": "^18.1.1",
+    "@types/node": "^7.0.5",
+    "@types/react": "^15.6.6",
+    "@types/react-dom": "^0.14.22",
+    "@types/react-redux": "^4.4.36",
+    "enzyme": "^2.7.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0"
   },
   "scripts": {
-    "build": "...command here,,,",
-    "dev": "...command here..."
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
   }
 }
